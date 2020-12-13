@@ -1,0 +1,209 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package object_Project;
+import java.util.Scanner;
+
+/**
+ *
+ * @author Dennis
+ */
+public class BlackJack {
+    public static String playagain = "y";
+    public static int player_random1 ;
+    public static int player_random2 ;
+    public static int player_total;
+    public static String seperate = "*******************************************"; 
+    public static int dealerwins = 0;
+    public static int playerwins = 0;
+
+    public static void main(String[] args)
+            
+    {
+        while (playagain.contentEquals("y") || playagain.contentEquals("yes"))  {
+            Scanner sc = new Scanner(System.in);
+            player_random1 = 100; 
+            player_random2 = 100;
+            
+        //creating the integers
+        while(player_random1 >= 12 || player_random2 >= 12  || player_random1 < 3 || player_random2 <3)
+        {
+            //asigning math
+            player_random1 = (int)(Math.random()*100);
+            player_random2 = (int)(Math.random()*100);
+        }
+        // giving play cards
+        player_total = player_random1 + player_random2;
+        System.out.println(seperate);
+        System.out.println("You get a "+player_random1+" and a "+player_random2);
+        System.out.println("Your total is "+player_total);
+        System.out.println(seperate);
+ if(player_total==21)
+        {
+            //if gets 21 in first two cards auto win
+            System.out.println(seperate);
+            System.out.println("Blackjack! Player Wins!");
+            playerwins ++; 
+            System.out.println("Player wins counter" + playerwins + "\n" + "Dealer wins counter" + dealerwins );
+            System.out.println("Would you like to play again (y/yes)");
+            System.out.println(seperate);
+            playagain = sc.nextLine();
+     return;
+        }
+        Start();
+    }
+}
+    public static void Start(){ 
+        Scanner sc = new Scanner(System.in);
+ //This deals with a hidden variable that the user cannot see 
+ System.out.println();
+        int dealer_random1 = 100;
+        int dealer_random2 = 100;
+        while(dealer_random1 >= 12 || dealer_random2 >= 12 || dealer_random1 < 3 || dealer_random2 < 3)
+        {
+            dealer_random1 = (int)(Math.random()*100);
+            dealer_random2 = (int)(Math.random()*100);
+        }
+        //DRAWING DEALERS HIDDEN Card
+        int dealer_total = dealer_random1 + dealer_random2;
+        boolean hidden = Math.random() < 0.5; // to decide whether to hide one card or not
+        if(hidden==true)
+        {
+            // SHOWING DEALER HAS HIDDEN CARD
+            System.out.println(seperate);
+            System.out.println("The dealer has a "+dealer_random1+" showing and a hidden card");
+     System.out.println("His total is hidden too");
+     System.out.println();
+     System.out.println(seperate);
+        }
+        else
+        {
+            //IF the chance of dealer getting 21 (which is unlikely) user will lose automaticly
+            System.out.println("The dealer has a "+dealer_random1+" showing  and a "+dealer_random2);
+            System.out.println("Dealer total is "+dealer_total);
+            System.out.println(seperate);
+     System.out.println();
+     if(dealer_total==21)
+            {
+                dealerwins ++; 
+            System.out.println("Dealer wins counter " + dealerwins + "\n" + "Player wins counter " + playerwins );
+                 System.out.println("Blackjack! Dealer Wins!");
+                 
+                 System.out.println("Would you like to play again (y/yes)");
+            playagain = sc.nextLine();
+
+   return;
+            }
+        }
+        
+        
+        // This is the player part in where they can choose  what they would like to do
+        String player_choice;
+        //inserts scanner
+        Scanner in = new Scanner(System.in);
+        System.out.println("Would you like to hit or stay?");
+        player_choice = in.nextLine();
+        while(player_choice.equals("hit"))
+        {
+            //Has player int  
+            int player_random3 = 100;
+            while(player_random3 >= 12  || player_random3 < 3)
+            {
+                //does math for random
+                player_random3 = (int)(Math.random()*100);
+            }
+            // showing the drawing
+            player_total = player_total + player_random3;
+            System.out.println("You drew a "+player_random3);
+            System.out.println("Your total is "+player_total);
+            
+            
+       //shown after dealer busts     
+     System.out.println();
+            if(player_total>21)
+            {
+                System.out.println("Bust Dealer wins!");
+                dealerwins ++; 
+            System.out.println("Dealer wins counter " + dealerwins + "\n" + "player wins counter " + playerwins );
+                System.out.println("Would you like to play again (y/yes)");
+            playagain = sc.nextLine();
+                return;
+            }
+            // If get total 21 win
+            else if(player_total==21)
+                {
+                    System.out.println("You Win!");
+                    playerwins ++; 
+            System.out.println("Player wins counter " + playerwins + "\n" + "Dealer " + dealerwins );
+                    System.out.println("Would you like to play again (y/yes)");
+            playagain = sc.nextLine();
+                    return;
+                }
+            //Asking hit or stay prompt
+            System.out.println("Would you like to hit or stay?");
+            player_choice = in.nextLine();
+        }
+        //user must correctly type in stay or code doesnt work
+        if (player_choice.equals("stay"))
+        {
+            System.out.println();
+            System.out.println("Okay, dealer's turn.");
+            //int for dealer random card
+            int dealer_random3 = 100;
+            while(dealer_random3 >= 12 || dealer_random3 <3)
+            {
+                //math for dealer's card
+                dealer_random3 = (int)(Math.random()*100);
+            }
+            //hiden card
+            System.out.println("Their hidden card was "+dealer_random2);
+            //total for dealer
+            System.out.println("Their total was "+dealer_total);
+            System.out.println();
+
+            if(dealer_total>16)
+            {
+                //Rule of blackjack dealer stays on 17 or higher
+                System.out.println("Dealer stays");
+                
+            }
+            else
+            {
+                //WHEN DEALER HAS LESS THAN 17
+                while(dealer_total<=16)
+                {
+                    //makes the dealer hit cards
+                    dealer_total = dealer_total + dealer_random3;
+                    System.out.println("Dealer choses to hit.");
+                    System.out.println("He draws a "+dealer_random3);
+                    System.out.println("His total is "+dealer_total);
+                }
+            }
+            //SHOWS DEALERS AND YOUR TOTAL
+            System.out.println();
+            System.out.println("Dealer total is "+dealer_total);
+            System.out.println("Your total is "+player_total);
+            //THEN SHOWS END PRINT SCREEN IF WON
+            if((player_total>dealer_total && player_total<21)||dealer_total>21)
+            {
+                System.out.println("YOU WIN!");
+                playerwins ++; 
+            System.out.println("Player win counter " + playerwins + "\n" + "Dealer win counter " + dealerwins );
+                System.out.println("Would you like to play again (y/yes)");
+            playagain = sc.nextLine();
+            }
+            //SHOWS DEALER IF HE WINS
+            else if((dealer_total<21 && player_total<dealer_total)||player_total>21)
+                 {
+                    dealerwins ++; 
+            System.out.println("Dealer wins counter" + dealerwins + "\n" + "player wins counter" + playerwins ); 
+                    System.out.println("Dealer wins! " );
+                    System.out.println("Would you like to play again (y/yes)");
+            playagain = sc.nextLine();
+                 }
+            
+        }
+    }
+}
